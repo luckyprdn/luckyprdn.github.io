@@ -73,8 +73,9 @@
 
     .loginButton {
       font-size: 15px;
-      text-align: center;
-      margin-top: 20px;
+      text-align:left;
+      margin-top: 30px;
+margin-bottom: 60px;
     }
 
     .loginButton a {
@@ -88,7 +89,7 @@
 
     .moreInfo {
       font-size: 20px;
-      text-align: center;
+      text-align: left;
     }
 
     /* Tambahkan gaya untuk box V0-V8 */
@@ -139,12 +140,12 @@
     </div>
   </div>
 
-  <div class="grid-container" id="data"></div>
-
   <div class="loginButton">
-    <p class="moreInfo">For more detailed information.</p>
+    <p class="moreInfo">For more detailed information</p>
     <a href="https://blynk.cloud/dashboard/login">Login to your authorized Blynk account</a>
   </div>
+
+  <div class="grid-container" id="data"></div>
 
   <script>
     function fetchData() {
@@ -235,7 +236,7 @@
 
     fetchData();
 
-    // Function to reload the page every 2 minute
+    // Function to reload the page every 1 minute
     function reloadPage() {
       setTimeout(() => {
         location.reload();
