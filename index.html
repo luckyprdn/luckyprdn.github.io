@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>PowerSense: Skripsi Teknik Elektro Lucky Pradana (190120201043)</title>
+  <title>PowerSense: Sistem Monitoring kWh Meter Sfere DTS-1946T</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -119,26 +119,26 @@
         'V0', 'V1', 'V2', 'V3', 'V4', 'V5', 'V6', 'V7', 'V8', 'V9', 'V10', 'V11', 'V12', 'V13', 'V14', 'V15', 'V16', 'V17', 'V20', 'V21'
       ];
       const pinDescriptions = {
-        V0: 'Tegangan L1 kWh Meter Main Entrance (V)',
-        V1: 'Tegangan L2 kWh Meter Main Entrance (V)',
-        V2: 'Tegangan L3 kWh Meter Main Entrance (V)',
-        V3: 'Arus L1 kWh Meter Main Entrance (A)',
-        V4: 'Arus L2 kWh Meter Main Entrance (A)',
-        V5: 'Arus L3 kWh Meter Main Entrance (A)',
-        V6: 'Daya kWh Meter Main Entrance (kW)',
-        V7: 'Faktor Daya kWh Meter Main Entrance',
-        V8: 'Frekuensi Meter Main Entrance (Hz)',
-        V9: 'Tegangan L1 kWh Meter Common Area (V)',
-        V10: 'Tegangan L2 kWh Meter Common Area (V)',
-        V11: 'Tegangan L3 kWh Meter Common Area (V)',
-        V12: 'Arus L1 kWh Meter Common Area (A)',
-        V13: 'Arus L2 kWh Meter Common Area (A)',
-        V14: 'Arus L3 kWh Meter Common Area (A)',
-        V15: 'Daya kWh Meter Common Area (kW)',
-        V16: 'Faktor Daya kWh Meter Common Area',
-        V17: 'Frekuensi Meter Common Area (Hz)',
-        V20: 'Reading ID',
-        V21: 'RSSI (dBm)'
+        V0: { label: 'Tegangan L1', description: 'Main Entrance (V)' },
+        V1: { label: 'Tegangan L2', description: 'Main Entrance (V)' },
+        V2: { label: 'Tegangan L3', description: 'Main Entrance (V)' },
+        V3: { label: 'Arus L1', description: 'Main Entrance (A)' },
+        V4: { label: 'Arus L2', description: 'Main Entrance (A)' },
+        V5: { label: 'Arus L3', description: 'Main Entrance (A)' },
+        V6: { label: 'Daya', description: 'Main Entrance (kW)' },
+        V7: { label: 'Faktor Daya', description: 'Main Entrance' },
+        V8: { label: 'Frekuensi', description: 'Main Entrance (Hz)' },
+        V9: { label: 'Tegangan L1', description: 'Common Area (V)' },
+        V10: { label: 'Tegangan L2', description: 'Common Area (V)' },
+        V11: { label: 'Tegangan L3', description: 'Common Area (V)' },
+        V12: { label: 'Arus L1', description: 'Common Area (A)' },
+        V13: { label: 'Arus L2', description: 'Common Area (A)' },
+        V14: { label: 'Arus L3', description: 'Common Area (A)' },
+        V15: { label: 'Daya', description: 'Common Area (kW)' },
+        V16: { label: 'Faktor Daya', description: 'Common Area' },
+        V17: { label: 'Frekuensi', description: 'Common Area (Hz)' },
+        V20: { label: 'Reading ID', description: 'Pembacaan' },
+        V21: { label: 'RSSI', description: '(dBm)' }
       };
 
       const dataElement = document.getElementById('data');
@@ -150,21 +150,28 @@
           .then(response => response.text())
           .then(data => {
             const value = data;
-            const description = pinDescriptions[virtualPin];
+            const pin = pinDescriptions[virtualPin];
+            const label = pin.label;
+            const description = pin.description;
 
             const pinBox = document.createElement('div');
             pinBox.className = 'pinBox';
 
             const pinLabel = document.createElement('p');
             pinLabel.className = 'pinLabel';
-            pinLabel.textContent = `${description}`;
+            pinLabel.textContent = label;
 
             const pinValue = document.createElement('p');
             pinValue.className = 'pinValue';
             pinValue.textContent = value;
 
+            const pinDescription = document.createElement('p');
+            pinDescription.className = 'pinDescription';
+            pinDescription.textContent = description;
+
             pinBox.appendChild(pinLabel);
             pinBox.appendChild(pinValue);
+            pinBox.appendChild(pinDescription);
 
             dataElement.appendChild(pinBox);
 
