@@ -53,7 +53,7 @@
     }
 
     .pinBox:hover {
-      transform: scale(1.05);
+      transform: scale(1.15);
     }
 
     .pinLabel {
@@ -68,7 +68,7 @@
     .pinDescription {
       margin-top: 10px;
       font-size: 14px;
-      color: #888;
+      color: #fff;
     }
 
     .loginButton {
@@ -89,6 +89,23 @@
     .moreInfo {
       font-size: 20px;
       text-align: center;
+    }
+
+    /* Tambahkan gaya untuk box V0-V8 */
+    .redBox {
+      background-color: red;
+      color: #fff;
+    }
+
+    /* Tambahkan gaya untuk box V9-V17 */
+    .blueBox {
+      background-color: blue;
+      color: #fff;
+    }
+
+    .greenBox {
+      background-color: green;
+      color: #fff;
     }
 
     @media only screen and (max-width: 600px) {
@@ -113,6 +130,7 @@
     <div>
       <h1>PowerSense: Sistem Monitoring kWh Meter Sfere DTS-1946T</h1>
       <p class="university">Universitas Maritim Raja Ali Haji</p>
+      <p class="university">Skripsi Teknik Elektro Lucky Pradana 190120201043</p>
     </div>
     <div>
       <a href="https://pelajarinfo.id/wp-content/uploads/2022/08/Universitas-Maritim-Raja-Ali-Haji-Logo.png">
@@ -189,9 +207,19 @@
             pinBox.appendChild(pinValue);
             pinBox.appendChild(pinDescription);
 
+            // Add specific classes for styling
+	   if (index >= 0 && index <= 1) {
+              pinBox.classList.add('greenBox');
+            }
+            if (index >= 2 && index <= 10) {
+              pinBox.classList.add('redBox');
+            } else if (index >= 11 && index <= 22) {
+              pinBox.classList.add('blueBox');
+            }
+
             dataElement.appendChild(pinBox);
 
-            // Fetch pin data untuk pin selanjutnya
+            // Fetch pin data for the next pin
             if (index + 1 < pinOrder.length) {
               fetchPinData(index + 1);
             }
@@ -201,17 +229,17 @@
           });
       }
 
-      // Memulai fetch pin data dari indeks 0
+      // Start fetching pin data from index 0
       fetchPinData(0);
     }
 
     fetchData();
 
-    // Fungsi untuk memuat ulang halaman setiap 1 menit
+    // Function to reload the page every 2 minute
     function reloadPage() {
       setTimeout(() => {
         location.reload();
-      }, 60000);
+      }, 120000);
     }
 
     reloadPage();
