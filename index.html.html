@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>PowerSense: Skripsi Teknik Elektro Lucky Pradana (190120201043)</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 20px;
+    }
+
+    h1 {
+      text-align: center;
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: left;
+      margin-bottom: 20px;
+    }
+
+    .logo {
+      max-width: 150px;
+      height: auto;
+    }
+
+    .university {
+      font-size: 20px;
+      text-align: left;
+      margin-top: 10px;
+    }
+
+    .grid-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      grid-gap: 20px;
+      margin-top: 20px;
+    }
+
+    .pinBox {
+      background-color: #fff;
+      border: 1px solid #ccc;
+      padding: 15px;
+      text-align: center;
+    }
+
+    .pinLabel {
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    .pinValue {
+      font-size: 20px;
+    }
+
+    .loginButton {
+      font-size: 15px;
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    .loginButton a {
+      padding: 10px 20px;
+      background-color: #007bff;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 5px;
+      margin-right: 10px;
+    }
+
+    .moreInfo {
+      font-size: 20px;
+      text-align: center;
+    }
+
+    @media only screen and (max-width: 600px) {
+      /* Styling tambahan untuk perangkat mobile */
+      .logo {
+        max-width: 100px;
+      }
+
+      .university {
+        font-size: 16px;
+        text-align: center;
+      }
+
+      .grid-container {
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <div>
+      <h1>PowerSense: Sistem Monitoring kWh Meter Sfere DTS-1946T</h1>
+      <p class="university">Universitas Maritim Raja Ali Haji</p>
+    </div>
+    <div>
+      <a href="https://pelajarinfo.id/wp-content/uploads/2022/08/Universitas-Maritim-Raja-Ali-Haji-Logo.png">
+        <img class="logo" src="https://pelajarinfo.id/wp-content/uploads/2022/08/Universitas-Maritim-Raja-Ali-Haji-Logo.png" alt="Logo">
+      </a>
+    </div>
+  </div>
+
+  <div class="grid-container" id="data"></div>
+
+  <div class="loginButton">
+    <p class="moreInfo">For More Detailed Information</p>
+    <a href="https://blynk.cloud/dashboard/login">Login to your Blynk Account</a>
+  </div>
+
+  <script>
+    function fetchData() {
+      const token = 'rlatiopl7tKkZ7Fr875ry3Z5J4smAk73';
+      const pinOrder = [
+        'V0', 'V1', 'V2', 'V3', 'V4', 'V5', 'V6', 'V7', 'V8', 'V9', 'V10', 'V11', 'V12', 'V13', 'V14', 'V15', 'V16', 'V17', 'V20', 'V21'
+      ];
+      const pinDescriptions = {
+        V0: 'Tegangan L1 kWh Meter Main Entrance (V)',
+        V1: 'Tegangan L2 kWh Meter Main Entrance (V)',
+        V2: 'Tegangan L3 kWh Meter Main Entrance (V)',
+        V3: 'Arus L1 kWh Meter Main Entrance (A)',
+        V4: 'Arus L2 kWh Meter Main Entrance (A)',
+        V5: 'Arus L3 kWh Meter Main Entrance (A)',
+        V6: 'Daya kWh Meter Main Entrance (kW)',
+        V7: 'Faktor Daya kWh Meter Main Entrance',
+        V8: 'Frekuensi Meter Main Entrance (Hz)',
+        V9: 'Tegangan L1 kWh Meter Common Area (V)',
+        V10: 'Tegangan L2 kWh Meter Common Area (V)',
+        V11: 'Tegangan L3 kWh Meter Common Area (V)',
+        V12: 'Arus L1 kWh Meter Common Area (A)',
+        V13: 'Arus L2 kWh Meter Common Area (A)',
+        V14: 'Arus L3 kWh Meter Common Area (A)',
+        V15: 'Daya kWh Meter Common Area (kW)',
+        V16: 'Faktor Daya kWh Meter Common Area',
+        V17: 'Frekuensi Meter Common Area (Hz)',
+        V20: 'Reading ID',
+        V21: 'RSSI (dBm)'
+      };
+
+      const dataElement = document.getElementById('data');
+
+      function fetchPinData(index) {
+        const virtualPin = pinOrder[index];
+
+        fetch(`https://sgp1.blynk.cloud/external/api/get?token=${token}&${virtualPin}`)
+          .then(response => response.text())
+          .then(data => {
+            const value = data;
+            const description = pinDescriptions[virtualPin];
+
+            const pinBox = document.createElement('div');
+            pinBox.className = 'pinBox';
+
+            const pinLabel = document.createElement('p');
+            pinLabel.className = 'pinLabel';
+            pinLabel.textContent = `${description}`;
+
+            const pinValue = document.createElement('p');
+            pinValue.className = 'pinValue';
+            pinValue.textContent = value;
+
+            pinBox.appendChild(pinLabel);
+            pinBox.appendChild(pinValue);
+
+            dataElement.appendChild(pinBox);
+
+            // Fetch pin data untuk pin selanjutnya
+            if (index + 1 < pinOrder.length) {
+              fetchPinData(index + 1);
+            }
+          })
+          .catch(error => {
+            console.log('Error fetching data:', error);
+          });
+      }
+
+      // Memulai fetch pin data dari indeks 0
+      fetchPinData(0);
+    }
+
+    fetchData();
+
+    // Fungsi untuk memuat ulang halaman setiap 10 detik
+    function reloadPage() {
+      setTimeout(() => {
+        location.reload();
+      }, 60000);
+    }
+
+    reloadPage();
+  </script>
+</body>
+</html>
