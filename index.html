@@ -148,13 +148,7 @@ margin-bottom: 60px;
 
   <div class="grid-container" id="data"></div>
 
-<script src="https://cdn.jsdelivr.net/npm/dotenv@8.2.0"></script>
   <script>
-    // Memuat konfigurasi dotenv
-    dotenv.config();
-
-  <script>
-
 function updateTime() {
             var now = new Date();
             var formattedTime = now.toLocaleString();
@@ -166,9 +160,7 @@ function updateTime() {
         setInterval(updateTime, 120000);
 
     function fetchData() {
-
-    // Mendapatkan nilai token dari variabel lingkungan
-    const token = process.env.TOKEN;
+      const token = 'rlatiopl7tKkZ7Fr875ry3Z5J4smAk73';
       const pinOrder = [
         'V20', 'V21', 'V0', 'V1', 'V2', 'V3', 'V4', 'V5', 'V6', 'V7', 'V8', 'V9', 'V10', 'V11', 'V12', 'V13', 'V14', 'V15', 'V16', 'V17'
       ];
