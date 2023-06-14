@@ -140,6 +140,7 @@ margin-bottom: 60px;
     </div>
   </div>
 
+    <p id="last-update" class ="moreInfo">Last Update:</p>
   <div class="loginButton">
     <p class="moreInfo">For more detailed information</p>
     <a href="https://blynk.cloud/dashboard/login">Login to your authorized Blynk account</a>
@@ -148,6 +149,16 @@ margin-bottom: 60px;
   <div class="grid-container" id="data"></div>
 
   <script>
+function updateTime() {
+            var now = new Date();
+            var formattedTime = now.toLocaleString();
+            document.getElementById("last-update").innerHTML = "Last Update: " + formattedTime;
+        }
+	updateTime()
+
+        // Panggil fungsi updateTime setiap detik
+        setInterval(updateTime, 120000);
+
     function fetchData() {
       const token = 'rlatiopl7tKkZ7Fr875ry3Z5J4smAk73';
       const pinOrder = [
